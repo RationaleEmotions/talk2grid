@@ -1,0 +1,18 @@
+hs_err_pid*
+*.jar
+.settings/
+.project
+.classpath
+test-output/
+target/
+*.swp
+bin/
+logs/
+*.DS_Store
+.idea/
+*.iml
+
+# Gradle files
+.gradle/
+build/
+/*/build/
