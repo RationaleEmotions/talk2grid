@@ -1,3 +1,5 @@
+![Build Status](https://travis-ci.org/RationaleEmotions/talk2grid.svg?branch=master)
+
 # Talk 2 Grid
 
 **Talk 2 Grid** is a very simple library that exposes some of the straight forward Http APIs that a Selenium Hub/Node
