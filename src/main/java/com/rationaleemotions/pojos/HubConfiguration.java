@@ -50,8 +50,6 @@ public class HubConfiguration extends BaseConfiguration {
         return cleanUpCycle;
     }
 
-
-
     /**
      * @return - list of extra servlets that have been wired into the Grid when it was started.
      */
