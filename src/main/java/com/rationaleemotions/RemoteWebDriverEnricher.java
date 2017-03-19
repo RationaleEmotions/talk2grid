@@ -67,6 +67,7 @@ public class RemoteWebDriverEnricher {
             setCodec(node, commandCodec, "commandCodec");
             setCodec(node, responseCodec, "responseCodec");
             appendListenerToWebDriver(driver, grid, node);
+            LOG.info("Traffic will now be routed directly to the node.");
             LOG.warning(constructWarningMessage(hub));
         } catch (Exception e) {
             //Gobble exceptions
@@ -77,20 +78,20 @@ public class RemoteWebDriverEnricher {
     }
 
     private static String constructWarningMessage(Host hub) {
-        String separator = Strings.repeat("*", 50);
+        String separator = Strings.repeat("*", 80);
         StringBuilder msg = new StringBuilder(separator);
         GridApiAssistant assistant = new GridApiAssistant(hub);
         HubConfiguration hubConfig = assistant.getHubConfiguration();
         int timeout = hubConfig.getTimeout();
         String hubUrl = String.format("http://%s:%s/grid/console", hub.getIpAddress(), hub.getPort());
-        msg.append("\nYour hub [").append(hubUrl).append(" ] is configured with '").append(timeout).
-            append("' seconds as timeout (via -timeout parameter.)\n");
+        msg.append("\nYour Hub URL is [").append(hubUrl).append("]");
+        msg.append("\n1. It is configured with [").append(timeout).append(" seconds] as timeout (via -timeout parameter.)\n");
         msg.append("This means that the server automatically kills a session that hasn't had any activity in the last ");
-        msg.append(timeout).append(" seconds. \n");
+        msg.append(timeout).append(" seconds.");
         int cleanupCycle = hubConfig.getCleanUpCycle() / 1000;
-        msg.append("The hub is configured with [").append(cleanupCycle).append(" seconds] as cleanup cycle ");
-        msg.append("(via -cleanUpCycle parameter.)\n");
-        msg.append("This means that the hub will poll for currently running sessions every [");
+        msg.append("\n2. It is configured with [").append(cleanupCycle).append(" seconds] as cleanup cycle ");
+        msg.append("(via -cleanUpCycle parameter.)");
+        msg.append("\nThis means that the hub will poll for currently running sessions every [");
         msg.append(cleanupCycle).append(" seconds] to check if there are any 'hung' sessions.");
         msg.append("\nBoth these values can cause your test session to be cleaned up and cause test failures.");
         msg.append("\nSo please ensure that you set the values for both these parameters on the grid to an appropriately higher value.");
