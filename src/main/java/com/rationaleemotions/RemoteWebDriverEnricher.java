@@ -1,5 +1,6 @@
 package com.rationaleemotions;
 
+import com.google.common.base.Strings;
 import com.rationaleemotions.pojos.Host;
 import com.rationaleemotions.pojos.HubConfiguration;
 import org.openqa.selenium.remote.CommandCodec;
@@ -76,20 +77,24 @@ public class RemoteWebDriverEnricher {
     }
 
     private static String constructWarningMessage(Host hub) {
-        StringBuilder msg = new StringBuilder();
+        String separator = Strings.repeat("*", 50);
+        StringBuilder msg = new StringBuilder(separator);
         GridApiAssistant assistant = new GridApiAssistant(hub);
         HubConfiguration hubConfig = assistant.getHubConfiguration();
         int timeout = hubConfig.getTimeout();
-        msg.append("The hub is configured with '").append(timeout).append("' seconds as timeout (via -timeout parameter.)");
+        String hubUrl = String.format("http://%s:%s/grid/console", hub.getIpAddress(), hub.getPort());
+        msg.append("\nYour hub [").append(hubUrl).append(" ] is configured with '").append(timeout).
+            append("' seconds as timeout (via -timeout parameter.)\n");
         msg.append("This means that the server automatically kills a session that hasn't had any activity in the last ");
         msg.append(timeout).append(" seconds. \n");
-        int cleanupCycle = hubConfig.getCleanUpCycle() * 1000;
+        int cleanupCycle = hubConfig.getCleanUpCycle() / 1000;
         msg.append("The hub is configured with [").append(cleanupCycle).append(" seconds] as cleanup cycle ");
-        msg.append("(via -cleanUpCycle parameter.)");
+        msg.append("(via -cleanUpCycle parameter.)\n");
         msg.append("This means that the hub will poll for currently running sessions every [");
-        msg.append(cleanupCycle).append(" seconds] to check if there are any 'hung' sessions. ");
-        msg.append("Both these values can cause your test session to be cleaned up and cause test failures. ");
-        msg.append("So please ensure that you set the values for both these parameters on the grid to an appropriately higher value.");
+        msg.append(cleanupCycle).append(" seconds] to check if there are any 'hung' sessions.");
+        msg.append("\nBoth these values can cause your test session to be cleaned up and cause test failures.");
+        msg.append("\nSo please ensure that you set the values for both these parameters on the grid to an appropriately higher value.");
+        msg.append("\n").append(separator);
         return msg.toString();
     }
 
