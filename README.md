@@ -28,7 +28,7 @@ consume it, you merely need to add the following as a dependency in your pom fil
 <dependency>
     <groupId>com.rationaleemotions</groupId>
     <artifactId>talk2grid</artifactId>
-    <version>1.0.1</version>
+    <version>1.2.0</version>
 </dependency>
 ```
 
@@ -87,7 +87,6 @@ We can however, try and remediate this by enriching the `RemoteWebDriver` instan
 package com.rationaleemotions.webdriver;
 
 import com.rationaleemotions.RemoteWebDriverEnricher;
-import com.rationaleemotions.pojos.Host;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -96,7 +95,6 @@ import java.net.URL;
 public class GridGames {
     public static void main(String[] args) throws Exception {
         RemoteWebDriver driver = null;
-        Host hub = new Host("localhost", "4444");
 
         try {
             driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), DesiredCapabilities.firefox());

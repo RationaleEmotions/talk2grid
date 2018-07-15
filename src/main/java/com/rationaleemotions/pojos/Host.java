@@ -50,6 +50,6 @@ public class Host {
 
     @Override
     public String toString() {
-        return "Host [" + ipAddress + "[ listening on port [" + port + "]";
+        return "Host [" + ipAddress + "] listening on port [" + port + "]";
     }
 }
