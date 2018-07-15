@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.rationaleemotions</groupId>
     <artifactId>talk2grid</artifactId>
-    <version>1.0.1</version>
+    <version>1.2.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>talk2grid</name>
@@ -79,7 +79,7 @@
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>6.9.4</version>
+            <version>6.14.3</version>
             <scope>test</scope>
         </dependency>
 
@@ -87,6 +87,12 @@
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
             <version>${selenium.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>testcontainers</artifactId>
+            <version>1.8.1</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

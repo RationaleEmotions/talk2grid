@@ -1,6 +1,14 @@
 language: java
 jdk:
 - oraclejdk8
+
+services:
+  - docker
+
+before_install:
+- docker pull selenium/hub:latest
+- docker pull selenium/node-chrome:latest
+
 notifications:
   email:
   - krishnan.mahadevan1978@gmail.com

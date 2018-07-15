@@ -32,14 +32,6 @@ class SimpleHttpClient {
         //utility class. Defeat instantiation.
     }
 
-    static JsonObject post(URL endPoint) {
-        return new JsonParser().parse(simplePost(endPoint)).getAsJsonObject();
-    }
-
-    static String simplePost(URL endpoint) {
-        return doHttpCall(endpoint, HttpPost.METHOD_NAME);
-    }
-
     static JsonObject get(URL endPoint) {
         return new JsonParser().parse(doHttpCall(endPoint, HttpGet.METHOD_NAME)).getAsJsonObject();
     }

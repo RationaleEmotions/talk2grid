@@ -44,7 +44,7 @@ public class GridApiAssistant {
     public Host getNodeDetailsForSession(String sessionId) {
         try {
             URL url = new URL(String.format(API_TESTSESSION, grid.getIpAddress(), grid.getPort(), sessionId));
-            JsonObject object = SimpleHttpClient.post(url);
+            JsonObject object = SimpleHttpClient.get(url);
             return new Host(object.get("proxyId").getAsString());
         } catch (MalformedURLException e) {
             throw new GridApiException(e);
@@ -63,7 +63,7 @@ public class GridApiAssistant {
             String id = String.format("http://%s:%s", node.getIpAddress(), node.getPort());
             URL url =
                 new URL(String.format(API_PROXY, grid.getIpAddress(), grid.getPort(), id));
-            JsonObject object = SimpleHttpClient.post(url);
+            JsonObject object = SimpleHttpClient.get(url);
             boolean success = object.get("success").getAsBoolean();
 
             if (! success) {
