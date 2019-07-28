@@ -8,6 +8,10 @@ public class GridApiException extends RuntimeException {
         super(t);
     }
 
+    public GridApiException(String message) {
+        super(message);
+    }
+
     public GridApiException(String message, Throwable cause) {
         super(message, cause);
     }

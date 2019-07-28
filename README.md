@@ -28,7 +28,7 @@ consume it, you merely need to add the following as a dependency in your pom fil
 <dependency>
     <groupId>com.rationaleemotions</groupId>
     <artifactId>talk2grid</artifactId>
-    <version>1.2.0</version>
+    <version>1.2.1</version>
 </dependency>
 ```
 
@@ -132,3 +132,39 @@ This utility is dependent on two important parameters in the Hub.
 
 * `-cleanUpCycle` - This parameter represents how often the Hub will poll all the proxies to find out if the sessions in each of the proxies are still active or if they can be cleaned up. So lets say you have set this value to be `5 seconds` and if your test runs for more than `5 seconds` then the Hub will treat your session as inactive (remember we are now by-passing the hub and routing all traffic to the node, so in the hub's perception the session is literally idle/hung) and clean it up. So this value should be set such that its more than the average life-time of a test.
 * `-timeout` - This parameter represents the maximum allowed idle time for a session, before which it gets marked as "idle session" and gets cleaned up. Here also the value should be set such that its greater than the average life-time of a test.
+
+### How to upload files to a remote machine (Selenium node) on which the current Selenium test is running.
+
+The below code snippet shows how to upload a file to the remote machine.
+
+```java
+import com.rationaleemotions.pojos.Host;
+import java.io.File;
+import java.net.URL;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
+
+public class Sample {
+  public static void main(String[] args) throws Exception {
+    RemoteWebDriver driver = null;
+
+    try {
+      URL url = new URL("http://localhost:4444/wd/hub");
+      driver = new RemoteWebDriver(url, new FirefoxOptions());
+      driver.get("https://the-internet.herokuapp.com/");
+      Host grid = new Host("localhost", "4444");
+      GridApiAssistant assistant = new GridApiAssistant(grid);
+      File fileToUpload = new File("/Users/krmahadevan/grid/foo.txt");
+      String sessionId = driver.getSessionId().toString();
+      String fileLocation = assistant.uploadFileToNode(sessionId, fileToUpload);
+      System.err.println("File uploaded to " + fileLocation);
+    } finally {
+      if (driver != null) {
+        driver.quit();
+      }
+    }
+  }
+}
+
+
+```
